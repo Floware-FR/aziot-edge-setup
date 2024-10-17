@@ -49,7 +49,7 @@ get_debian_version() {
     fi
 
     # Only testing for Debian 12 (bookworm)
-    SUPPORTED_VERSIONS=("12")
+    SUPPORTED_VERSIONS=("11")
     if [[ ! " ${SUPPORTED_VERSIONS[@]} " =~ " ${DEBIAN_VERSION} " ]]; then
         print_error "Unsupported Debian version: $DEBIAN_VERSION\nSupported versions are: ${SUPPORTED_VERSIONS[*]}"
     fi
