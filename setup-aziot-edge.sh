@@ -114,10 +114,13 @@ read -r CONNECTION_STRING
 if [ -z "$CONNECTION_STRING" ]; then
     print_error "Connection string cannot be empty"
 fi
-
-# Install Microsoft package repository
 print_status "Setting up Microsoft package repository..."
-curl -fsSL https://packages.microsoft.com/config/ubuntu/$UBUNTU_VERSION/multiarch/prod.list | sudo tee /etc/apt/sources.list.d/microsoft-prod.list
+# Install Microsoft package repository
+if [ "$UBUNTU_VERSION" = "22.04" ]; then
+    curl -fsSL https://packages.microsoft.com/config/ubuntu/$UBUNTU_VERSION/prod.list | sudo tee /etc/apt/sources.list.d/microsoft-prod.list
+else
+    curl -fsSL https://packages.microsoft.com/config/ubuntu/$UBUNTU_VERSION/multiarch/prod.list | sudo tee /etc/apt/sources.list.d/microsoft-prod.list
+fi
 curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/microsoft.gpg
 check_status
 
