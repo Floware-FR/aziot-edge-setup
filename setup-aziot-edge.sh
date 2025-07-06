@@ -95,7 +95,7 @@ install_docker_18_04() {
 install_moby() {
     print_status "Installing Moby Engine..."
     sudo apt-get update
-    sudo apt-get install moby-engine=27.3.1-ubuntu22.04u1 --allow-downgrades
+    sudo apt-get install moby-engine=27.5.1-ubuntu22.04u1 --allow-downgrades
 }
 
 # Main script execution starts here
