@@ -31,7 +31,7 @@ First you will need to get your connection string on azure
 
 ## Raspberry
 
-Careful you will need Debian 11 as it is the only one tested by Azure
+Careful you will need Debian 12 as it is the only one tested by Azure
 
 ```bash
     wget https://github.com/Floware-FR/aziot-edge-setup/releases/download/3/set-aziot-raspi.sh
@@ -41,8 +41,7 @@ Careful you will need Debian 11 as it is the only one tested by Azure
 
 ## Jetson
 
-Careful you will need Debian 11 as it is the only one tested by Azure
-
+You can use version of Jetpack up to 6.0 for this setup (not tested above versions)
 ```bash
     wget https://github.com/Floware-FR/aziot-edge-setup/releases/download/1/setup-aziot-edge.sh
     chmod +x setup-aziot-edge.sh
@@ -54,5 +53,5 @@ Careful you will need Debian 11 as it is the only one tested by Azure
 
 - **Enea de Bollivier** - Senior Edge AI engineer, Floware
 - **Noé Breton** - Apprentice, Floware
-- **Yassine Boussafir** - Intern, Floware
+- **Yassine Boussafir** - IoT Engineer, Floware
 
