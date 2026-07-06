@@ -139,6 +139,16 @@ print_status "Configuring Docker Daemo..."
 configure_nvidia_runtime
 check_status
 
+# Jetson (JetPack) kernels don't autoload the iptables 'raw' table module, and
+# edgeHub's DIRECT ACCESS FILTERING rule needs it -- without it edgeAgent fails
+# to start with "can't initialize iptables table `raw'" (seen on FLWR-O-024/025/
+# 030/042, 2026-07-06). Load it now and persist across reboots.
+print_status "Loading iptables kernel modules (Jetson: raw table not autoloaded)..."
+sudo modprobe iptable_raw || true
+sudo modprobe iptable_mangle || true
+printf 'iptable_raw\niptable_mangle\n' | sudo tee /etc/modules-load.d/flwr-docker-iptables.conf > /dev/null
+check_status
+
 # Install Azure IoT Edge
 print_status "Installing Azure IoT Edge..."
 sudo apt-get update
