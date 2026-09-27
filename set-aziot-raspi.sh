@@ -61,12 +61,22 @@ configure_docker_daemon() {
     # Create Docker daemon directory if it doesn't exist
     sudo mkdir -p /etc/docker
     
-    # Create or overwrite daemon.json with NVIDIA runtime configuration
-    sudo tee /etc/docker/daemon.json > /dev/null << 'EOF'
-{
-    "log-driver": "local"
-}
-EOF
+    # Merge into daemon.json, never overwrite it: keys set by other layers (data-root on the
+    # /data partition, allow-direct-routing, ...) must survive a re-run of this script.
+    sudo python3 - <<'PYEOF'
+import json, os
+p = "/etc/docker/daemon.json"
+try:
+    d = json.load(open(p))
+    if not isinstance(d, dict):
+        d = {}
+except (OSError, ValueError):
+    d = {}
+d["log-driver"] = "local"
+tmp = p + ".tmp"
+json.dump(d, open(tmp, "w"), indent=4)
+os.replace(tmp, p)
+PYEOF
     
     # Restart Docker service to apply changes
     print_status "Restarting Docker service..."
